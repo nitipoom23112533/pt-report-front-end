@@ -1,0 +1,19 @@
+.link-item {
+  display: block;
+  padding: 15px;
+  background-color: #e3f2fd; /* สีฟ้าอ่อน (inactive) */
+  color: #000;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.link-item.active-link {
+  background-color: #6597b9; /* สีเทาเมื่อ active */
+}
+
+.link-wrapper {
+  padding: 10px;
+  transition: background-color 0.3s;
+  overflow: hidden;
+  text-align: center;
+}

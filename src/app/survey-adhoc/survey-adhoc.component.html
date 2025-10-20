@@ -1,0 +1,68 @@
+    <div class="container">
+      <div class="card mt-5">
+          <div class="card-header text-center">
+              <span class="h4">ADHOC Survey</span>
+          </div>
+          <div class="card-body">
+            <!-- <div class="text-center mb-3">
+                <button class="btn btn-primary" (click)="openModal()">➕ Add Row</button>
+            </div> -->
+            <div *ngIf="isLoading" class="text-center mt-3" [style.marginBottom.px]="25">
+                <div class="dot-spinner">
+                    <div></div><div></div><div></div><div></div>
+                </div>
+            </div>
+            <div *ngIf="!isLoading">
+              <div class="text-center">
+                <table class="table-hover" 
+                    style="margin: 0 auto 20px auto; text-align: center;">
+                  <thead>
+                      <tr>
+                      <th style="width: 300px;">Survey ID</th>
+                      <th style="width: 500px;">Survey Name</th>
+                      <th style="width: 300px;">Status</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @for (item of surveyDetailDB; track $index) {
+                          <tr>
+                              <td>{{item?.surveyId}}</td>
+                              <td>{{item?.surveyName}}</td>
+                              @if (item?.isActive == true) {
+                                  <td class="td-active">Active</td>
+                              } @else {
+                                  <td class="td-inactive">Inactive</td>
+                              }
+                          </tr>
+                      }
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-center mb-2">
+                <button (click)="openForm()" class="btn btn-light" style="margin-left: 10px;">change survey</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div> 
+
+<!-- The form -->
+ @if (isOpen) {
+  <div class="form-popup" id="myForm">
+    <form class="form-container" (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <h1 class="text-center">Survey List</h1>
+
+      <label for="survey"><b>Select Survey</b></label>
+      <select name="survey" ngModel required #survey="ngModel" [class.is-invalid]="survey.invalid && form.submitted">
+        <option value="" disabled selected>-- Select Survey --</option>
+        <option *ngFor="let item of surveys" [ngValue]="item">
+          {{ item.id }} | {{ item.name }}
+        </option>
+      </select>
+
+      <button type="submit" class="btn">Submit</button>
+      <button type="button" class="btn cancel" (click)="closeForm()">Close</button>
+    </form>
+  </div>
+ }
+

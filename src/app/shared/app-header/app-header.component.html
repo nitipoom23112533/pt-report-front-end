@@ -1,0 +1,35 @@
+<nav class="navbar navbar-dark">
+  <button class="navbar-toggler mr-3" type="button" *ngIf="isMobile && showMenu" (click)="onToggleMenu()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <a class="navbar-brand mb-0 h1 ms-2" [routerLink]="['/dashboard']">PT Report</a>
+
+  <!-- เมนูเรียงแนวนอน -->
+  <ul class="navbar-nav flex-row ms-3">
+    <li class="nav-item ">
+      <a class="nav-link"
+         [routerLink]="['/dashboard']"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: false }">
+         Report
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"
+         [routerLink]="['/survey-adhoc']"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">
+         ADHOC Survey
+      </a>
+    </li>
+  </ul>
+
+  <!-- user dropdown -->
+  <div ngbDropdown class="d-inline-block ms-auto" *ngIf="user">
+    <button class="btn nav-dropdown text-white" ngbDropdownToggle>{{ user.email }}</button>
+    <div ngbDropdownMenu>
+      <button ngbDropdownItem (click)="logout()">Logout</button>
+    </div>
+  </div>
+</nav>

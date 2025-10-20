@@ -1,0 +1,102 @@
+
+.form-popup {
+  position: fixed;          /* ล็อกตำแหน่ง */
+  top: 50%;                 /* กึ่งกลางแนวตั้ง */
+  left: 50%;                /* กึ่งกลางแนวนอน */
+  transform: translate(-50%, -50%); /* เลื่อนจุดอ้างอิงให้ตรงกลางจริง ๆ */
+
+  width: 600px;          /* กำหนดความกว้าง */
+  max-width: 90%;        /* กันจอเล็กเกินไป */
+  min-height: 300px;     /* ความสูงขั้นต่ำ */
+  padding: 20px;
+  
+  border: 3px solid #f1f1f1;
+  z-index: 9999;            /* ให้อยู่บนสุด */
+  background: #fff;         /* เผื่ออยากให้มีพื้นหลัง */
+  padding: 20px;            /* เพิ่มระยะห่างภายใน */
+  border-radius: 10px;      /* ขอบโค้ง */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* เงาสวย ๆ */
+}
+
+/* Add styles to the form container */
+.form-container {
+  padding: 10px;
+  background-color: white;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+.form-container label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  color: #333;
+}
+
+.form-container select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s ease;
+    appearance: none; /* ลบลูกศรเดิมของ browser */
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 16px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.form-container select:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  outline: none;
+}
+
+.form-container option {
+  padding: 10px;
+}
+
+/* ใส่ใน .component.css ของตาราง */
+.td-active {
+  color: #0e6245;      
+}
+.td-inactive {
+  color: #555;
+}
+
+.is-invalid {
+  border: 1px solid red;
+  box-shadow: 0 0 3px red; 
+}
+
+/* .error {
+  color: red;
+  font-size: 0.8rem;
+} */
+

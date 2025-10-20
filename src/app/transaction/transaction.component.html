@@ -1,0 +1,173 @@
+    <div class="container-fluid">
+      <div class="card">
+          <div class="card-header text-center">
+              <span class="h4">Transaction Report</span>
+          </div>
+          <div class="card-body">
+            <div class="text-center" style="margin-top: 10px;">
+              <mat-form-field class="date-picker">
+                <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="startDate">
+                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="date-picker" style="margin-left: 10px;">
+                <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="endDate">
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+              </mat-form-field>
+              <!-- <label style="margin-left: 10px;">
+                <input 
+                  type="checkbox" 
+                  [checked]="selectedAllProfile === 1"
+                  (change)="onAllProfileChange(1, $event)" 
+                /> All Profile
+              </label> -->
+              <button (click)="fetchData()" class="btn btn-primary" style="margin-left: 10px;">Search</button>
+              <button class="btn btn-success" (click)="exportToExcel()" style="margin-left: 5px;">Export to Excel</button>
+            </div>
+            <!-- แสดง loading animation ขณะกำลังโหลดข้อมูล -->
+            <div *ngIf="isLoading" class="text-center mt-3" [style.marginBottom.px]="25">
+                <div class="dot-spinner">
+                    <div></div><div></div><div></div><div></div>
+                </div>
+            </div>
+            <!-- ส่วนแสดงผลข้อมูล -->
+            <div *ngIf="!isLoading">
+              <div class="col-lg text-center" style="margin-bottom: 15px;">
+                <div *ngIf="isAlert" class="mt-4" style="margin-bottom: 40px;">
+                    <div class="text-danger">
+                      <h1 >-- เลือกเงื่อนไขให้ครบถ้วนและค้นหา --</h1>
+                      <p>เลือกวันที่ได้ทีละเดือน</p>
+                      <p>ถ้าอยากได้ข้อมูลแบบ Profiles ทั้งหมดติดต่อ</p>
+                      <p>nitipoom.sa&#64;brsth.com</p>
+                  </div>
+                </div>
+                <div *ngIf="!isAlert">
+                  <table *ngFor="let cf of Customer_proflie; let i = index" class="table table-hover table-bordered section-{{i+1}}" style="margin-bottom: 20px;">
+                    <thead>
+                        <tr>
+                            <th colspan="17" class="text-center">Transaction({{cf}})</th>
+                        </tr>
+                        <tr>
+                          <th class="text-center">#</th>
+                          <th *ngFor="let prefix of categoryPrefixes" class="text-center">{{prefix}} {{ categoryNames[prefix] }}</th>
+                          <th class="text-center">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngIf="cf == 'Usage Segment'">
+                        <tr *ngFor="let item of usageSegmentArray">
+                          <th>{{ item }}</th>
+                          <ng-container *ngIf="item != 'Total'">
+                            <td *ngFor="let prefix of categoryPrefixes">
+                              {{ invitationCount?.[prefix + usagesegmentSuffix[item]] || 0 }}
+                            </td>
+                            <td>
+                              {{ calculateTotalrow(invitationCount, categoryPrefixes, usagesegmentSuffix[item]) }}
+                            </td>
+                          </ng-container>
+                          <ng-container *ngIf="item == 'Total'">
+                            <td *ngFor="let prefix of ['PT01', 'PT02', 'PT03', 'PT05', 'PT06', 'PT08', 'PT09', 'PT10', 'PT15', 'PT16', 'PT17', 'PT18', 'PT19', 'PT20', 'PT21']">
+                              {{ calculateTotal(invitationCount, prefix,['L', 'M', 'H', 'LO', 'SVO', 'I', 'NU', 'NULL']) }}
+                            </td>
+                            <td>
+                              {{ usageSegment?.Cusotmer_total }}
+                            </td>
+                          </ng-container>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="cf == 'Gender'">
+                        <tr *ngFor="let item of GenderArray">
+                          <th>{{ item }}</th>
+                          <ng-container *ngIf="item != 'Total'">
+                            <td *ngFor="let prefix of categoryPrefixes">
+                              {{ invitationCount?.[prefix + genderSuffix[item]] || 0 }}
+                            </td>
+                            <td>
+                              {{ calculateTotalrow(invitationCount, categoryPrefixes, genderSuffix[item]) }}
+                            </td>
+                          </ng-container>
+                          <ng-container *ngIf="item == 'Total'">
+                            <td *ngFor="let prefix of ['PT01', 'PT02', 'PT03', 'PT05', 'PT06', 'PT08', 'PT09', 'PT10', 'PT15', 'PT16', 'PT17', 'PT18', 'PT19', 'PT20', 'PT21']">
+                              {{ calculateTotal(invitationCount, prefix,['Female', 'Male', 'GNULL']) }}
+                            </td>
+                            <td>
+                              {{ usageSegment?.Cusotmer_total }}
+                            </td>
+                          </ng-container>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="cf == 'Age Range'">
+                        <tr *ngFor="let item of AgeRangeArray">
+                          <th>{{ item }}</th>
+                          <ng-container *ngIf="item != 'Total'">
+                            <td *ngFor="let prefix of categoryPrefixes">
+                              {{ invitationCount?.[prefix + agerangeSuffix[item]] || 0 }}
+                            </td>
+                            <td>
+                              {{ calculateTotalrow(invitationCount, categoryPrefixes, agerangeSuffix[item]) }}
+                            </td>
+                          </ng-container>
+                          <ng-container *ngIf="item == 'Total'">
+                            <td *ngFor="let prefix of ['PT01', 'PT02', 'PT03', 'PT05', 'PT06', 'PT08', 'PT09', 'PT10', 'PT15', 'PT16', 'PT17', 'PT18', 'PT19', 'PT20', 'PT21']">
+                              {{ calculateTotal(invitationCount, prefix,['Age1', 'Age2', 'Age3', 'Age4', 'Age5', 'Age6', 'Age7', 'Age8', 'AgeNULL']) }}
+                            </td>
+                            <td>
+                              {{ usageSegment?.Cusotmer_total }}
+                            </td>
+                          </ng-container>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="cf == 'Customer & Lift Segment'">
+                        <tr *ngFor="let item of CustomerSegmentArray">
+                          <th>{{ item }}</th>
+                          <ng-container *ngIf="item != 'Total'">
+                            <td *ngFor="let prefix of categoryPrefixes">
+                              {{ invitationCount?.[prefix + customersegmentSuffix[item]] || 0 }}
+                            </td>
+                            <td>
+                              {{ calculateTotalrow(invitationCount, categoryPrefixes, customersegmentSuffix[item]) }}
+                            </td>
+                          </ng-container>
+                          <ng-container *ngIf="item == 'Total'">
+                            <td *ngFor="let prefix of ['PT01', 'PT02', 'PT03', 'PT05', 'PT06', 'PT08', 'PT09', 'PT10', 'PT15', 'PT16', 'PT17', 'PT18', 'PT19', 'PT20', 'PT21']">
+                              {{ calculateTotal(invitationCount, prefix,['CS02', 'CS03', 'CS04', 'CS05', 'CS06',
+                              'CS07', 'CS08', 'CS09', 'CS10', 'CS11', 'CS12', 'CS13', 'CS14', 'CS18', 'CS99', 'CSNULL','CSL','CSM','CSU','CS','FB','LM',
+                              'ML','MM','MU','PS','SL','SU','US','WTB','WP','W']) }}
+                            </td>
+                            <td>
+                              {{ usageSegment?.Cusotmer_total }}
+                            </td>
+                          </ng-container>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="cf == 'Occupation'">
+                        <tr *ngFor="let item of OccupationArray">
+                          <th>{{ item }}</th>
+                          <ng-container *ngIf="item != 'Total'">
+                            <td *ngFor="let prefix of categoryPrefixes">
+                              {{ invitationCount?.[prefix + occupationSuffix[item]] || 0 }}
+                            </td>
+                            <td>
+                              {{ calculateTotalrow(invitationCount, categoryPrefixes, occupationSuffix[item]) }}
+                            </td>
+                          </ng-container>
+                          <ng-container *ngIf="item == 'Total'">
+                            <td *ngFor="let prefix of ['PT01', 'PT02', 'PT03', 'PT05', 'PT06', 'PT08', 'PT09', 'PT10', 'PT15', 'PT16', 'PT17', 'PT18', 'PT19', 'PT20', 'PT21']">
+                              {{ calculateTotal(invitationCount, prefix,['GOV', 'Mass', 'NA', 'Salary', 'SE',
+                              'STD', 'Wealth', 'Welfare', 'OCNULL']) }}
+                            </td>
+                            <td>
+                              {{ usageSegment?.Cusotmer_total }}
+                            </td>
+                          </ng-container>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>    
+              </div>
+            </div>
+          </div>
+        </div>
+    </div> 

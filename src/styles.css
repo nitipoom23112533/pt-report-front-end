@@ -1,0 +1,137 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+body {
+    height: 100%;
+}
+
+body {
+    background-color: #f7f8fc;
+    font-family: "Niramit", sans-serif;
+}
+
+.nav-tabs {
+    border-color: #438a5e;
+}
+
+.nav-tabs .nav-item:nth-child(n+2) {
+    margin-left: 5px;
+}
+
+.nav-tabs .nav-link {
+    border-color: #438a5e;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: #438a5e;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #438a5e;
+    border-color: #438a5e;
+    color: white;
+}
+
+.my-section .nav-link {
+    border: 1px solid #438a5e;
+    margin: 5px;
+}
+
+.my-section .nav-link.active {
+    background-color: #438a5e;
+    border-color: #438a5e;
+    color: white;
+}
+
+.card-header {
+    background-color: #77cef1;
+    color: white;
+}
+.card-body {
+    padding: 5px;
+}
+.badge-mycolor {
+    background-color: #438a5e;
+    color: white;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #438a5e;
+    border-color: #438a5e;
+}
+
+.delay-1 {
+    background-color: #FFFF00;
+}
+
+.delay-2 {
+    background-color: #FFA500;
+}
+
+.delay-3 {
+    background-color: #FF0000;
+    color: whitesmoke;
+}
+
+.full-dialog .modal-dialog {
+    min-width: 100%;
+    margin: 0;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+/* spinner loading */
+.dot-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.dot-spinner div {
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  border-radius: 50%;
+  animation: bounce 0.6s infinite alternate;
+}
+.dot-spinner div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dot-spinner div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.dot-spinner div:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+@keyframes bounce {
+  to {
+    transform: translateY(-10px);
+    opacity: 0.7;
+  }
+}
+
+.navbar-custom{
+  background-color: #eceaea;
+  margin-bottom: 15px;
+}
+.breadcrumb-item a{
+  cursor: pointer;
+  text-decoration: none;
+}
+.div-custom{
+    background-color: rgb(201, 201, 201);
+    /* border-radius: 10px;  */
+}
+
+.custom-checkbox{
+ pointer-events: none;
+
+}
+.custom-input{
+    background-color: rgb(231, 230, 230);
+}
+
